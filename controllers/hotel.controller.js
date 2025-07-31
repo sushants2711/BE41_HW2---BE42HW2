@@ -291,6 +291,17 @@ export const deleteHotel = async (req, res) => {
                 });
         };
 
+        const deleteData = await hotelModel.findByIdAndDelete(hotelId);
+        
+        if(!deleteData) {
+            return res
+            .status(404)
+            .json({
+                success: false,
+                message: "Data not exist."
+            });
+        };
+        
         return res
             .status(200)
             .json({
@@ -306,5 +317,21 @@ export const deleteHotel = async (req, res) => {
                 message: "Internal Server Error",
                 error: error.message
             })
+    }
+}
+
+export const updateHotel = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+
+    } catch (error) {
+        return res
+        .status(500)
+        .json({
+            success: false,
+            message: "Internal Server Error",
+            error: error.message
+        })
     }
 }
