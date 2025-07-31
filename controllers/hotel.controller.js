@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import hotelModel from "../models/hotel.model.js";
 
 export const addHotelController = async (req, res) => {
@@ -267,3 +268,43 @@ export const hotelCategory = async (req, res) => {
             })
     }
 };
+
+export const deleteHotel = async (req, res) => {
+    try {
+        const { hotelId } = req.params;
+
+        if (!hotelId) {
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message: "Hotel id is missing"
+                });
+        };
+
+        if (!mongoose.Types.ObjectId.isValid(hotelId)) {
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message: "Invalid id format"
+                });
+        };
+
+        return res
+            .status(200)
+            .json({
+                success: true,
+                message: "Data deleted successfully"
+            });
+    }
+    catch (error) {
+        return res
+            .status(500)
+            .json({
+                success: false,
+                message: "Internal Server Error",
+                error: error.message
+            })
+    }
+}
