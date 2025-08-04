@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDb } from "./config/db.connect.js";
 import hotelRoute from "./routers/hotel.route.js";
+import cors from "cors";
+
 
 dotenv.config();
 
@@ -13,6 +15,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 connectDb();
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.use("/hotels", hotelRoute)
 
